@@ -49,6 +49,7 @@ GEM
     ast (2.2.0)
     attr_defaultable (0.0.3)
     builder (3.2.2)
+    byebug (9.0.6)
     capybara (2.7.1)
       addressable
       mime-types (>= 1.16)
@@ -214,6 +215,7 @@ DEPENDENCIES
   active_model_serializers
   annotate
   attr_defaultable
+  byebug
   capybara
   cucumber-rails
   database_cleaner
@@ -242,4 +244,4 @@ RUBY VERSION
    ruby 2.3.0p0
 
 BUNDLED WITH
-   1.12.5
+   1.15.0

@@ -12,6 +12,7 @@ gem 'rails-api'
 gem 'swagger-docs'
 
 group :development, :test do
+  gem 'byebug'
   gem 'active_cucumber'
   gem 'capybara'
   gem 'cucumber-rails', require: false
