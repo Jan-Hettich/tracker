@@ -19,3 +19,11 @@
 # Ignore gemset files
 /.ruby-gemset
 /.ruby-version
+
+# Ignore swagger-generated files
+/public/api/v1/*
+/public/api/api-docs.json
+
+# Ignore byebug history
+/.byebug_history
+
