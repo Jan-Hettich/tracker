@@ -4,7 +4,8 @@ class ListTasks < ListCollection
   attr_defaultable :result_serializer, -> { V1::TaskSerializer }
 
   def initialize params
-  	@params = params
+  	super(params.slice(:page, :page_size))
+  	@project_id = params[:project_id]
   end
 
   def collection_type
@@ -12,7 +13,7 @@ class ListTasks < ListCollection
   end
 
   def collection
-    @tasks ||= task_respository.where(@params)
+    @tasks ||= task_respository.where(project_id: @project_id)
   end
 
 end
