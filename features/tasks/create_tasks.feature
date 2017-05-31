@@ -1,4 +1,4 @@
-@focus @domain @api
+@domain @api
 Feature: Creating tasks
 
 	In order to track the work that I need to do
@@ -22,8 +22,6 @@ Feature: Creating tasks
 	  	| PROJECT ID                           | NAME        | DESCRIPTION             |  STATE  |
 	    | 54f8419c-3f22-4cba-b194-5f8b4727ccfd | Sample Task | This is a sample task.  |  todo   |
 
-	
-	#TODO: Refactor using ScenarioOutline
 
 	Scenario:  Trying to create a task without a name
 		When I try to create a task with:

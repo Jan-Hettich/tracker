@@ -1,4 +1,4 @@
-class ListProjects < ListCollection
+	class ListProjects < ListCollection
 
   attr_defaultable :project_respository, -> { Project }
   attr_defaultable :result_serializer, -> { V1::ProjectSerializer }
