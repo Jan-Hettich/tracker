@@ -1,8 +1,9 @@
 # == Schema Information
 #
-# Table name: projects
+# Table name: tasks
 #
 #  id          :uuid             not null, primary key
+#  project_id  :uuid             not null
 #  name        :string
 #  description :text
 #  state       :integer          default(10)
@@ -11,26 +12,27 @@
 #
 # Indexes
 #
-#  index_projects_on_name  (name) UNIQUE
+#  index_tasks_on_project_id  (project_id)
 #
 
-class Project < ActiveRecord::Base
-  validates :name, presence: true, uniqueness: true
-  validates :state, presence: true
+class Task < ActiveRecord::Base
+  # validates :name, presence: true, uniqueness: true
+  # validates :state, presence: true
 
-  has_many :tasks
+  belongs_to :project
 
   after_initialize :set_default_state
 
   enum state: {
     disabled: -1,
-    active: 10,
-    archived: 20
+    todo: 10,
+    'in-progress': 20,
+    done: 30
   }
 
   private
 
   def set_default_state
-    self.state ||= :active
+    self.state ||= :todo
   end
 end

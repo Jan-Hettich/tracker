@@ -44,7 +44,9 @@ class ListCollection
   end
 
   def serialized_collection
-    pager.results.map { |result| result_serializer.new(result).attributes }
+    pager.results.map do |result| 
+      result_serializer.new(result).attributes
+    end
   end
 
   attr_reader :page, :page_size, :errors

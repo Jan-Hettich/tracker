@@ -1,4 +1,4 @@
-@domain @api
+@focus @domain @api
 Feature: Listing tasks
 
   In order to track the work that I need to do
@@ -12,9 +12,10 @@ Feature: Listing tasks
       | ID          | 54f8419c-3f22-4cba-b194-5f8b4727ccfd |
       | NAME        | Valid project name                   |
 
-  Scenario: No parameters are specified and there are 5 tasks                |
-    Given 5 tasks for project 4f8419c-3f22-4cba-b194-5f8b4727ccfd 
-    When I request the tasks list for project 54f8419c-3f22-4cba-b194-5f8b4727ccfd
+  Scenario: Listing the tasks for a given project
+    Given 5 tasks for project "54f8419c-3f22-4cba-b194-5f8b4727ccfd"
+    When I request the tasks list with parameters: 
+      | PROJECT ID  | 54f8419c-3f22-4cba-b194-5f8b4727ccfd |
     Then I get 5 tasks back
 
   Scenario: Verifying the format shape
@@ -23,7 +24,7 @@ Feature: Listing tasks
       | PROJECT ID  | 54f8419c-3f22-4cba-b194-5f8b4727ccfd |
       | NAME        | Sample Task                          |
       | DESCRIPTION | A small sample task                  |  
-    When I request the tasks list for project 54f8419c-3f22-4cba-b194-5f8b4727ccfd
+    When I request the tasks list for project "54f8419c-3f22-4cba-b194-5f8b4727ccfd"
     Then I get the data:
       """
       {
