@@ -16,7 +16,7 @@ module V1
 	    end
 
 	    def task_params
-	      params.permit(:task).permit :name, :description
+	      params.require(:task).permit :name, :description, :state
 	    end
 
 	end
