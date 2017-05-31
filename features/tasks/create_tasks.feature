@@ -1,4 +1,4 @@
-@domain @api
+@focus @domain @api
 Feature: Creating tasks
 
 	In order to track the work that I need to do
@@ -18,9 +18,9 @@ Feature: Creating tasks
 	  	| NAME           | Sample Task             |
 	  	| DESCRIPTION    | This is a sample task.  |
 	  	| PROJECT ID     |  54f8419c-3f22-4cba-b194-5f8b4727ccfd |
-    Then the system has the task:
-	  	| ID | PROJECT ID                           | NAME        | DESCRIPTION             |  STATE  |
-	    |  * | 54f8419c-3f22-4cba-b194-5f8b4727ccfd | Sample Task | This is a sample task.  |  todo   |
+    Then the system has the tasks:
+	  	| PROJECT ID                           | NAME        | DESCRIPTION             |  STATE  |
+	    | 54f8419c-3f22-4cba-b194-5f8b4727ccfd | Sample Task | This is a sample task.  |  todo   |
 
 	
 	#TODO: Refactor using ScenarioOutline
@@ -29,12 +29,12 @@ Feature: Creating tasks
 		When I try to create a task with:
 			| DESCRIPTION    | This is a sample task.                |
 	  	| PROJECT ID     |  54f8419c-3f22-4cba-b194-5f8b4727ccfd |
-		Then the project has 0 tasks
+		Then the system has 0 tasks
 		And I get the error "Name can't be blank"
 
 	Scenario:  Trying to create a task without a description
 		When I try to create a task with:
 			| NAME           | Sample Task                           |
 			| PROJECT ID     |  54f8419c-3f22-4cba-b194-5f8b4727ccfd |
-		Then the project has 0 tasks
+		Then the system has 0 tasks
 		And I get the error "Description can't be blank"		

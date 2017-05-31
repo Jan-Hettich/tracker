@@ -1,4 +1,4 @@
-@focus @domain @api
+@domain @api
 Feature: Listing tasks
 
   In order to track the work that I need to do

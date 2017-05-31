@@ -16,8 +16,9 @@
 #
 
 class Task < ActiveRecord::Base
-  # validates :name, presence: true, uniqueness: true
-  # validates :state, presence: true
+  validates :name, presence: true
+  validates :description, presence: true
+  validates :state, presence: true
 
   belongs_to :project
 
