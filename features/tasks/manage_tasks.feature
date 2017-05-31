@@ -10,7 +10,7 @@ Feature: Managing tasks
 	- task states:  todo (default), in-progress, done
 	- valid state transitions:  todo <=> in-progress, in-progress => done
 
-	Scenario:  Allowed state transitions
+	Scenario Outline:  Allowed state transitions
 		Given a task in the "<INITIAL>" state
 		When I try to transition it to "<NEXT>" state
 		Then the task is in the "<NEXT>" state
@@ -21,7 +21,7 @@ Feature: Managing tasks
 			| in_progress | todo        |
 			| in_progress | done        |
 
-	Scenario:  Forbidden state transitions
+	Scenario Outline:  Forbidden state transitions
 		Given a task in the "<INITIAL>" state
 		When I try to transition it to the "<NEXT>" state
 		Then the task is in the "<INITIAL>" state

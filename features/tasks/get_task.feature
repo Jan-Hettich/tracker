@@ -1,3 +1,4 @@
+  @domain @api
   Feature:  Getting a task
 
   	In order to track the work that I need to do

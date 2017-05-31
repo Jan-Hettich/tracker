@@ -10,7 +10,7 @@ Feature: Listing tasks
   Background:
     Given a project:
       | ID          | 54f8419c-3f22-4cba-b194-5f8b4727ccfd |
-      | NAME        | Valid project name       
+      | NAME        | Valid project name                   |
 
   Scenario: No parameters are specified and there are 5 tasks                |
     Given 5 tasks for project 4f8419c-3f22-4cba-b194-5f8b4727ccfd 
