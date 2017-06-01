@@ -20,9 +20,9 @@ module V1
 	    end
 
 	    def show
-      	task = Task.where(id: params[:id]).first
+      	task, errors = GetTask.new(params[:id]).call
 	      if task.present?
-	        render json: TaskSerializer.new(task).attributes, status: 200
+	      	render json: task
 	      else
 	        render json: { errors: ['Task not found'] }, status: 404
 	      end

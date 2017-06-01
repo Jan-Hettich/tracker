@@ -4,7 +4,7 @@ class GetTask
 	attr_defaultable :result_serializer, -> {V1::TaskSerializer}
 
 	def initialize id
-		@task_id = id
+		@id = id
     @errors = []
 	end
 
@@ -24,7 +24,7 @@ class GetTask
   end
 
   def task
-  	task_repository.where(id: @task_id)
+  	task_repository.where(id: @id).first
   end
 
   attr_reader :errors
