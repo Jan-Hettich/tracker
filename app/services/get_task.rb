@@ -1,30 +1,30 @@
 class GetTask
 
-	attr_defaultable :task_repository, -> {Task}
-	attr_defaultable :result_serializer, -> {V1::TaskSerializer}
+  attr_defaultable :task_repository, -> {Task}
+  attr_defaultable :result_serializer, -> {V1::TaskSerializer}
 
-	def initialize id
-		@id = id
+  def initialize id
+    @id = id
     @errors = []
-	end
+  end
 
-	def call
+  def call
     [response, errors]
   end
 
   def response
       serialized_task
-  	rescue StandardError => e
-    	errors.push e.message
-    	nil
+  rescue StandardError => e
+    errors.push e.message
+    nil
   end
 
   def serialized_task
-  	result_serializer.new(task).attributes
+    result_serializer.new(task).attributes
   end
 
   def task
-  	task_repository.where(id: @id).first
+    task_repository.where(id: @id).first
   end
 
   attr_reader :errors
