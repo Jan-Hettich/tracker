@@ -20,4 +20,9 @@ class DomainWorldDriver < WorldDriver
     @errors.push *task.errors.full_messages
   end
 
+  def get_task params
+    @results, e = GetTask.new(params).call
+    @errors.push *e
+  end
+
 end

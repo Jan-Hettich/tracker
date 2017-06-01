@@ -1,8 +1,8 @@
 module V1
   class TaskSerializer < ActiveModel::Serializer
 
-  	has_one :project
-    attributes :id, :name, :description, :state
+  	belongs_to :project
+    attributes :id, :project_id, :name, :description, :state
 
   end
 end

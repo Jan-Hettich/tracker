@@ -1,5 +1,4 @@
 module V1
-
 	class TasksController < ApplicationController
 
 	    def index
@@ -12,11 +11,20 @@ module V1
 	    end
 
 	    def create
-	      project = Task.new create_params
-	      if project.save
-	        render json: project, status: 201
+	      task = Task.new create_params
+	      if task.save
+	        render json: task, status: 201
 	      else
-	        render json: { errors: project.errors.full_messages }, status: 400
+	        render json: { errors: task.errors.full_messages }, status: 400
+	      end
+	    end
+
+	    def show
+      	task = Task.where(id: params[:id]).first
+	      if task.present?
+	        render json: TaskSerializer.new(task).attributes, status: 200
+	      else
+	        render json: { errors: ['Task not found'] }, status: 404
 	      end
 	    end
 

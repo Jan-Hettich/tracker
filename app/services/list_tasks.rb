@@ -1,6 +1,6 @@
 class ListTasks < ListCollection
 
-  attr_defaultable :task_respository, -> { Task }
+  attr_defaultable :task_repository, -> { Task }
   attr_defaultable :result_serializer, -> { V1::TaskSerializer }
 
   def initialize params
@@ -13,7 +13,7 @@ class ListTasks < ListCollection
   end
 
   def collection
-    @tasks ||= task_respository.where(project_id: @project_id)
+    @tasks ||= task_repository.where(project_id: @project_id)
   end
 
 end

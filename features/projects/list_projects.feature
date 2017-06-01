@@ -15,7 +15,6 @@ Feature: Listing projects
     And the total pages is 2
     And the total results is 26
 
-
   Scenario: Specifying parameters for the last page
     Given 3 projects
     When I request the projects list with parameters:
@@ -54,7 +53,6 @@ Feature: Listing projects
     When I request the projects list with parameters:
       | PAGE | -1 |
     Then I get the error "Page cannot be <= 0"
-
 
   Scenario: Verifying the format shape
     Given a project:
