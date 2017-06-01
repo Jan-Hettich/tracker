@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   namespace :v1 do
     resources :projects, only: crud
-   	resources :tasks, only: crud
+    resources :tasks, only: crud
   end
 
   #CONSIDER:  use shallow-nested routes for tasks instead:
