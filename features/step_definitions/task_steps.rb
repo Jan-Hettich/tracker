@@ -1,9 +1,9 @@
-Given(/^(\d+) tasks for project "(.*)"$/) do |count, project_id|
+Given(/^(\d+) tasks? for project "(.*)"$/) do |count, project_id|
   d.given_tasks count: count, project_id: project_id
 end
 
 Given(/^a task:$/) do |table|
-  d.given_task table
+  @task = d.given_task table
 end
 
 When(/^I (?:try to )?create a task with:$/) do |table|
@@ -21,4 +21,14 @@ end
 
 Then(/^the system has (\d+) tasks?$/) do |count|
   expect(Task.count).to eq count.to_i
+end
+
+When(/^I (?:try to )?transition the task to the "(.*)" state$/) do |next_state|
+  expect(@task).to be
+  d.update_task @task, state: next_state
+end
+
+Then(/^the task is in the "(.*)" state$/) do |state|
+  expect(@task).to be
+  expect(@task.state).to eq state
 end

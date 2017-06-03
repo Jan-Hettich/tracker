@@ -1,4 +1,4 @@
-@todo @domain @api
+@domain @api
 Feature: Managing tasks
 
   In order to track the work that I need to do
@@ -11,21 +11,23 @@ Feature: Managing tasks
   - valid state transitions:  todo <=> in-progress, in-progress => done
 
   Scenario Outline:  Allowed state transitions
-    Given a task in the "<INITIAL>" state
-    When I try to transition it to "<NEXT>" state
+    Given a task:
+      | STATE       | <INITIAL>   |
+    When I transition the task to the "<NEXT>" state
     Then the task is in the "<NEXT>" state
 
     Examples:
       | INITIAL     | NEXT        |
       | todo        | in-progress |
-      | in_progress | todo        |
-      | in_progress | done        |
+      | in-progress | todo        |
+      | in-progress | done        |
 
   Scenario Outline:  Forbidden state transitions
-    Given a task in the "<INITIAL>" state
-    When I try to transition it to the "<NEXT>" state
+    Given a task:
+      | STATE       | <INITIAL>   |
+    When I try to transition the task to the "<NEXT>" state
     Then the task is in the "<INITIAL>" state
-    And I get the error "Invalid state transtion!"
+    And I get the error "State transition invalid!"
 
     Examples:
       | INITIAL     | NEXT        |
@@ -34,6 +36,7 @@ Feature: Managing tasks
       | done        | in-progress |
 
   Scenario:  Receive text message on transition to "done"
-    Given a task in the state "in-progress" state
-    When I transition it to the "done" state
+    Given a task:
+      | STATE       | in-progress |
+    When I transition the task to the "done" state
     Then the system sends me a confirming text message

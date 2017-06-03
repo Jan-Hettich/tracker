@@ -2,6 +2,7 @@ class WorldDriver
   include RSpec::Matchers
 
   attr_reader :errors, :results
+  # attr_reader :singleton_task
 
   def initialize
     @results = nil
@@ -32,7 +33,9 @@ class WorldDriver
   end
 
   def given_task data
-    ActiveCucumber.create_one Task, data
+    options = vertical_table(data)
+    options.merge! project_id: FactoryGirl.create(:project).id if !options.include?(:project_id) 
+    FactoryGirl.create(:task, options)
   end
 
   def check_unexpected_errors

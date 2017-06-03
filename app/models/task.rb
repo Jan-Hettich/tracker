@@ -19,6 +19,7 @@ class Task < ActiveRecord::Base
   validates :name, presence: true
   validates :description, presence: true
   validates :state, presence: true
+  validate :state_transitions, on: :update
 
   belongs_to :project
 
@@ -30,6 +31,16 @@ class Task < ActiveRecord::Base
     'in-progress': 20,
     done: 30
   }
+
+  @@valid_transitions = [['todo', 'in-progress'], ['in-progress', 'todo'], ['in-progress', 'done']]
+
+  def Task.valid_transition? old_state, new_state
+    @@valid_transitions.include? [old_state.to_s, new_state.to_s]
+  end
+
+  def state_transitions
+    errors.add(:state, 'transition invalid!') if !Task.valid_transition?(state_was, state)
+  end
 
   private
 
