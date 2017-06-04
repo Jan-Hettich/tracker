@@ -19,6 +19,7 @@ class Task < ActiveRecord::Base
   validates :name, presence: true
   validates :description, presence: true
   validates :state, presence: true
+  validates :project_id, presence: true
   validate :state_transitions, on: :update
 
   belongs_to :project

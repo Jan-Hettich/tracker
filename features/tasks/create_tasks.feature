@@ -22,7 +22,6 @@ Feature: Creating tasks
       | PROJECT ID                           | NAME        | DESCRIPTION             | STATE  |
       | 54f8419c-3f22-4cba-b194-5f8b4727ccfd | Sample Task | This is a sample task.  | todo   |
 
-
   Scenario:  Trying to create a task without a name
     When I try to create a task with:
       | DESCRIPTION    | This is a sample task.                |
@@ -36,3 +35,10 @@ Feature: Creating tasks
       | PROJECT ID     |  54f8419c-3f22-4cba-b194-5f8b4727ccfd |
     Then the system has 0 tasks
     And I get the error "Description can't be blank"
+
+  Scenario:  Trying to create a task without a project_id
+    When I try to create a task with:
+      | NAME           | Sample Task                           |
+      | DESCRIPTION    | This is a sample task.                |
+    Then the system has 0 tasks
+    And I get the error "Project can't be blank"
