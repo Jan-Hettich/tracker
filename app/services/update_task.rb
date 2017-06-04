@@ -33,7 +33,7 @@ class UpdateTask
   end
 
   def task
-    task_repository.where(id: @id).first || raise( "Not found: Task #{@id}" )
+    task_repository.where(id: @id).first || raise( "Task not found: #{@id}" )
   end
 
   attr_reader :errors

@@ -9,8 +9,7 @@ Feature: Managing tasks
   Rules:
   - task states:  todo (default), in-progress, done
   - valid state transitions:  todo <=> in-progress, in-progress => done
-
-  @todo
+  
   Scenario Outline:  Allowed state transitions
     Given a task:
       | STATE       | <INITIAL>   |

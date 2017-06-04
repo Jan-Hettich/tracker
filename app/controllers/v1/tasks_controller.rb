@@ -19,12 +19,23 @@ module V1
       end
     end
 
+    def update
+      task, errors = UpdateTask.new(params[:id], task_params).call
+      if task.present?
+        render json: task, status: 200
+      else
+        status =  errors.any? { |e| e =~ /not found/i } ? 404 : 400
+        render json: { errors: errors}, status: status
+      end
+    end
+
     def show
       task, errors = GetTask.new(params[:id]).call
       if task.present?
         render json: task
       else
-        render json: { errors: ['Task not found'] }, status: 404
+        status =  errors.any? { |e| e =~ /not found/i } ? 404 : 400
+        render json: { errors: errors}, status: status
       end
     end
 

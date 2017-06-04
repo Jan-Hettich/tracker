@@ -24,7 +24,7 @@ class GetTask
   end
 
   def task
-    task_repository.where(id: @id).first
+    task_repository.where(id: @id).first || raise( "Task not found: #{@id}" )
   end
 
   attr_reader :errors

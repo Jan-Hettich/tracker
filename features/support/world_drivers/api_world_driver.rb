@@ -37,6 +37,14 @@ class ApiWorldDriver < WorldDriver
     end
   end
 
+  def update_task task, params
+    result = patch "/v1/tasks/#{task.id}", { task: params }
+    body = JSON.parse(result.body).deep_symbolize_keys
+    if body[:errors].present?
+      @errors.push *body[:errors]
+    end
+  end
+
   def get_task id
     result = get "/v1/tasks/#{id}"
     body = JSON.parse(result.body).deep_symbolize_keys
