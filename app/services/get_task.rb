@@ -13,7 +13,7 @@ class GetTask
   end
 
   def response
-      serialized_task
+    serialized_task
   rescue StandardError => e
     errors.push e.message
     nil

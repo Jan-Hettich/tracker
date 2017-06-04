@@ -21,12 +21,8 @@ class DomainWorldDriver < WorldDriver
   end
 
   def update_task task, params
-    fail 'No task specified for update.' if !task
-    task.update params
-    if task.errors.count > 0
-      @errors.push *task.errors.full_messages
-      task.reload
-    end
+    @results, e = UpdateTask.new(task.id, params).call
+    @errors.push *e
   end
 
   def get_task id

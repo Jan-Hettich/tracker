@@ -3,7 +3,7 @@ Given(/^(\d+) tasks? for project "(.*)"$/) do |count, project_id|
 end
 
 Given(/^a task:$/) do |table|
-  @task = d.given_task table
+  @the_task = d.given_task table
 end
 
 When(/^I (?:try to )?create a task with:$/) do |table|
@@ -24,11 +24,10 @@ Then(/^the system has (\d+) tasks?$/) do |count|
 end
 
 When(/^I (?:try to )?transition the task to the "(.*)" state$/) do |next_state|
-  expect(@task).to be
-  d.update_task @task, state: next_state
+  d.update_task @the_task, state: next_state
 end
 
 Then(/^the task is in the "(.*)" state$/) do |state|
-  expect(@task).to be
-  expect(@task.state).to eq state
+  @the_task.reload
+  expect(@the_task.state).to eq state
 end
