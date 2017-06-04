@@ -2,7 +2,6 @@ class WorldDriver
   include RSpec::Matchers
 
   attr_reader :errors, :results
-  # attr_reader :singleton_task
 
   def initialize
     @results = nil
