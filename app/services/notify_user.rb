@@ -2,21 +2,22 @@ class NotifyUser
 
     class << self
       attr_defaultable :sms, -> {
-        # set up Twilio client here
+        @client = Twilio::REST::Client.new ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN']
+        @client.messages
       }
     end
 
-    attr_defaultable :sms_user, -> { '+17024260164' }
-    attr_defaultable :sms_out, -> { ENV["SMS_OUT"] }
+    attr_defaultable :sms_user, -> { ENV['DEFAULT_USER_PHONE_NUMBER'] }
+    attr_defaultable :twilio_number, -> { ENV['TWILIO_PHONE_NUMBER'] }
 
     def initialize(message)
-      @from = sms_out;
+      @from = twilio_number;
       @to = sms_user;
       @message = message
     end
 
     def call
-      NotifyUser.sms.send(from, to, message)  
+      NotifyUser.sms.create(from: from, to: to, body: message)
     end
 
     attr_reader :from, :to, :message

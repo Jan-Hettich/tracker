@@ -25,7 +25,7 @@ end
 
 When(/^I (?:try to )?transition the task to the "(.*)" state$/) do |next_state|
   sms_double = double('sms')
-  allow(sms_double).to receive(:send)
+  allow(sms_double).to receive(:create)
   NotifyUser.sms = sms_double
   d.update_task @the_task, state: next_state
 end
@@ -37,13 +37,16 @@ end
 
 Then(/^the system "(.*)" a confirming text message with the "(.*)" state$/) do |maybe, next_state|
   if maybe == "sends"
-    expect(NotifyUser.sms).to have_received(:send).with(
-      anything(), anything(), "Task \"#{@the_task.name}\" is #{next_state}!")
+    expect(NotifyUser.sms).to have_received(:create).with(hash_including(
+      from: ENV['TWILIO_PHONE_NUMBER'],
+      to: ENV['DEFAULT_USER_PHONE_NUMBER'],
+      body: "Task \"#{@the_task.name}\" is #{next_state}!")
+    )
   else
-    expect(NotifyUser.sms).not_to have_received(:send)
+    expect(NotifyUser.sms).not_to have_received(:create)
   end
 end
 
 Then(/^the system does not send a confirming text message$/) do
-  expect(NotifyUser.sms).to_not have_received(:send)
+  expect(NotifyUser.sms).to_not have_received(:create)
 end
