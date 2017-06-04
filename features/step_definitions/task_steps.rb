@@ -24,9 +24,6 @@ Then(/^the system has (\d+) tasks?$/) do |count|
 end
 
 When(/^I (?:try to )?transition the task to the "(.*)" state$/) do |next_state|
-  sms_double = double('sms')
-  allow(sms_double).to receive(:create)
-  NotifyUser.sms = sms_double
   d.update_task @the_task, state: next_state
 end
 

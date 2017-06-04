@@ -36,18 +36,22 @@ class UpdateTask
     raise
   end
 
+  def task
+    @task ||= task_repository.where(id: @id).first || raise( "Task not found: #{@id}" )
+  end
+
   def notify
-    message = ''
-    if (updated_attributes[:state] == "done") && (original_attributes[:state] != "done")
-      message = "Task \"#{task.name}\" is done!"
-      notification_provider.new(message).call()
-    end
+    notification_provider.new(message).call() if notification_required?
   rescue
     Rails.logger.warn "Unable to send update notification:\n#{message}"
   end
 
-  def task
-    @task ||= task_repository.where(id: @id).first || raise( "Task not found: #{@id}" )
+  def notification_required?
+   (updated_attributes[:state] == "done") && (original_attributes[:state] != "done")
+  end
+
+  def message
+    @message ||= "Task \"#{task.name}\" is #{updated_attributes[:state]}!"
   end
 
   attr_reader :errors

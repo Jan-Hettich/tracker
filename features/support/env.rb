@@ -78,6 +78,10 @@ end
 
 Before do
   @world_driver = "#{DESIRED_WORLD}WorldDriver".constantize.new
+
+  # Mock SMS notifications
+  NotifyUser.sms = double('sms')
+  allow(NotifyUser.sms).to receive(:create)
 end
 
 After do
