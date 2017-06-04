@@ -18,6 +18,15 @@ Feature: Listing tasks
       | PROJECT ID  | 54f8419c-3f22-4cba-b194-5f8b4727ccfd |
     Then I get 5 tasks back
 
+  Scenario: Listing the tasks for all projects
+    And a project:
+      | ID          | 1340c077-2c4b-4c16-b53f-c2cae34eeafb |
+      | NAME        | Another project name                 |
+    And 5 tasks for project "54f8419c-3f22-4cba-b194-5f8b4727ccfd"
+    And 5 tasks for project "1340c077-2c4b-4c16-b53f-c2cae34eeafb"
+    When I request the tasks list
+    Then I get 10 tasks back
+
   Scenario: Verifying the format shape
     Given a task:
       | ID          | 3f53e6a0-edc8-4b81-baa6-06b5740f88c1 |
