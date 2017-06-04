@@ -7,19 +7,17 @@ class NotifyUser
       }
     end
 
-    attr_defaultable :sms_user, -> { ENV['DEFAULT_USER_PHONE_NUMBER'] }
-    attr_defaultable :twilio_number, -> { ENV['TWILIO_PHONE_NUMBER'] }
+    attr_defaultable :twilio_phone_number, -> { ENV['TWILIO_PHONE_NUMBER'] }
+    attr_defaultable :user_phone_number, -> { ENV['DEFAULT_USER_PHONE_NUMBER'] }
 
     def initialize(message)
-      @from = twilio_number;
-      @to = sms_user;
       @message = message
     end
 
     def call
-      NotifyUser.sms.create(from: from, to: to, body: message)
+      NotifyUser.sms.create(from: twilio_phone_number, to: user_phone_number, body: message)
     end
 
-    attr_reader :from, :to, :message
+    attr_reader :message
 
 end

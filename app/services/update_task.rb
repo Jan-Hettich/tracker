@@ -37,8 +37,10 @@ class UpdateTask
   end
 
   def notify
+    message = ''
     if (updated_attributes[:state] == "done") && (original_attributes[:state] != "done")
-      notification_provider.new("Task \"#{task.name}\" is done!").call()
+      message = "Task \"#{task.name}\" is done!"
+      notification_provider.new(message).call()
     end
   rescue
     Rails.logger.warn "Unable to send update notification:\n#{message}"
