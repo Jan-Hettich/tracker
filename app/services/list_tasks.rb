@@ -13,7 +13,11 @@ class ListTasks < ListCollection
   end
 
   def collection
-    @tasks ||= task_repository.where(project_id: @project_id)
+    if @project_id
+      @tasks ||= task_repository.where(project_id: @project_id)
+    else
+      @tasks = task_repository.all
+    end
   end
 
 end
