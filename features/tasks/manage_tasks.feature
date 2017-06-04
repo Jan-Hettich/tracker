@@ -15,12 +15,13 @@ Feature: Managing tasks
       | STATE       | <INITIAL>   |
     When I transition the task to the "<NEXT>" state
     Then the task is in the "<NEXT>" state
+    And the system "<MAYBE_SENDS>" a confirming text message with the "<NEXT>" state
 
     Examples:
-      | INITIAL     | NEXT        |
-      | todo        | in-progress |
-      | in-progress | todo        |
-      | in-progress | done        |
+      | INITIAL     | NEXT        | MAYBE_SENDS   |
+      | todo        | in-progress | does not send |
+      | in-progress | todo        | does not send |
+      | in-progress | done        | sends         |
 
   Scenario Outline:  Forbidden state transitions
     Given a task:
@@ -28,6 +29,7 @@ Feature: Managing tasks
     When I try to transition the task to the "<NEXT>" state
     Then the task is in the "<INITIAL>" state
     And I get the error "State transition invalid!"
+    And the system does not send a confirming text message
 
     Examples:
       | INITIAL     | NEXT        |
@@ -35,8 +37,3 @@ Feature: Managing tasks
       | done        | todo        |
       | done        | in-progress |
 
-  Scenario:  Receive text message on transition to "done"
-    Given a task:
-      | STATE       | in-progress |
-    When I transition the task to the "done" state
-    Then the system sends me a confirming text message

@@ -2,6 +2,7 @@ class UpdateTask
 
   attr_defaultable :task_repository, -> {Task}
   attr_defaultable :result_serializer, -> {V1::TaskSerializer}
+  attr_defaultable :notification_provider, -> {NotifyUser}
 
   def initialize id, params
     @id = id
@@ -14,28 +15,41 @@ class UpdateTask
   end
 
   def response
-    serialized_updated_task
+    @original_attributes = serialize
+    update
+    notify
+    @updated_attributes
   rescue StandardError => e
     errors.push e.message
     nil
   end
 
-  def serialized_updated_task
-    result_serializer.new(updated_task).attributes
+  def serialize
+    result_serializer.new(task).attributes
   end
 
-  def updated_task
-    t = self.task
-    t.update!(@params) && t
+  def update
+    task.update! @params
+    @updated_attributes = serialize
   rescue
-    t.reload
+    task.reload
     raise
   end
 
+  def notify
+    if (updated_attributes[:state] == "done") && (original_attributes[:state] != "done")
+      notification_provider.new("Task \"#{task.name}\" is done!").call()
+    end
+  rescue
+    Rails.logger.warn "Unable to send update notification:\n#{message}"
+  end
+
   def task
-    task_repository.where(id: @id).first || raise( "Task not found: #{@id}" )
+    @task ||= task_repository.where(id: @id).first || raise( "Task not found: #{@id}" )
   end
 
   attr_reader :errors
+  attr_reader :original_attributes
+  attr_reader :updated_attributes
 
 end
