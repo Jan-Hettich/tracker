@@ -33,10 +33,12 @@ class Task < ActiveRecord::Base
     done: 30
   }
 
-  @@valid_transitions = [['todo', 'in-progress'], ['in-progress', 'todo'], ['in-progress', 'done']]
+  def self.valid_transitions
+    [['todo', 'in-progress'], ['in-progress', 'todo'], ['in-progress', 'done']]
+  end
 
   def Task.valid_transition? old_state, new_state
-    @@valid_transitions.include? [old_state.to_s, new_state.to_s]
+    Task.valid_transitions.include? [old_state.to_s, new_state.to_s]
   end
 
   def state_transitions
