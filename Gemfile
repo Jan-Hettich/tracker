@@ -14,6 +14,7 @@ gem 'twilio-ruby'
 
 group :development, :test do
   gem 'byebug'
+  gem 'uuid'
   gem 'active_cucumber'
   gem 'capybara'
   gem 'cucumber-rails', require: false
