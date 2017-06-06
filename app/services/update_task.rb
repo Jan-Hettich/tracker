@@ -15,10 +15,9 @@ class UpdateTask
   end
 
   def response
-    @original_attributes = serialize
     update
     notify
-    @updated_attributes
+    serialize
   rescue StandardError => e
     errors.push e.message
     nil
@@ -29,8 +28,8 @@ class UpdateTask
   end
 
   def update
+    @original_state = task.state
     task.update! @params
-    @updated_attributes = serialize
   rescue
     task.reload
     raise
@@ -47,15 +46,14 @@ class UpdateTask
   end
 
   def notification_required?
-   (updated_attributes[:state] == "done") && (original_attributes[:state] != "done")
+   (task.state == "done") && (original_state != "done")
   end
 
   def message
-    @message ||= "Task \"#{task.name}\" is #{updated_attributes[:state]}!"
+    @message ||= "Task \"#{task.name}\" is #{task.state}!"
   end
 
   attr_reader :errors
-  attr_reader :original_attributes
-  attr_reader :updated_attributes
+  attr_reader :original_state
 
 end
