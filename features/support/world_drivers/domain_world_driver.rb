@@ -15,4 +15,19 @@ class DomainWorldDriver < WorldDriver
     @errors.push *project.errors.full_messages
   end
 
+  def create_task params
+    task = Task.create params
+    @errors.push *task.errors.full_messages
+  end
+
+  def update_task task, params
+    @results, e = UpdateTask.new(task.id, params).call
+    @errors.push *e
+  end
+
+  def get_task id
+    @results, e = GetTask.new(id).call
+    @errors.push *e
+  end
+
 end

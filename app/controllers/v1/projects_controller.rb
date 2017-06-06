@@ -5,8 +5,8 @@ module V1
     swagger_api :index do
       summary 'List all projects'
       notes 'This lists all the active projects'
-      param :query, :page, :integer, :optional, 'page number of results, default 1'
-      param :query, :page_size, :integer, :optional, 'number of results per page, default 25'
+      param :query, :page, :integer, :optional, 'Page number of results, default 1'
+      param :query, :page_size, :integer, :optional, 'Number of results per page, default 25'
     end
     def index
       projects, errors = ListProjects.new(index_params).call
@@ -18,8 +18,8 @@ module V1
     end
 
     swagger_api :show do
-      summary 'Fetch a single Project'
-      param :path, :id, :string, :required, 'User Id'
+      summary 'Fetch a single project'
+      param :path, :id, :string, :required, 'Project id'
     end
     def show
       project = Project.find_by params[:id]
@@ -46,7 +46,7 @@ module V1
 
     swagger_api :update do
       summary 'Updates an existing Project'
-      param :path, :id, :string, :required, 'Project Id'
+      param :path, :id, :string, :required, 'Project id'
       param :form, :name, :string, :optional, 'Project designation'
       param :form, :description, :string, :optional, 'Project description'
     end
@@ -62,8 +62,8 @@ module V1
     end
 
     swagger_api :destroy do
-      summary 'Deletes an existing Project'
-      param :path, :id, :string, :required, 'Project Id'
+      summary 'Deletes an existing project'
+      param :path, :id, :string, :required, 'Project id'
     end
     def destroy
       project = Project.find_by params[:id]

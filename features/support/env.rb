@@ -8,6 +8,7 @@ require 'cucumber/rails'
 require 'active_cucumber'
 require 'rspec/collection_matchers'
 require 'factory_girl_rails'
+require 'cucumber/rspec/doubles'
 
 $LOAD_PATH.unshift 'spec'
 $LOAD_PATH.unshift 'spec/support'
@@ -77,6 +78,10 @@ end
 
 Before do
   @world_driver = "#{DESIRED_WORLD}WorldDriver".constantize.new
+
+  # Mock SMS notifications
+  NotifyUser.sms = double('sms')
+  allow(NotifyUser.sms).to receive(:create)
 end
 
 After do

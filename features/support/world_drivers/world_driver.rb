@@ -18,8 +18,24 @@ class WorldDriver
     end
   end
 
+  def given_tasks count: nil, project_id: nil
+    if count.present?
+      Project.where(id: project_id).empty? &&  (FactoryGirl.create :project).id
+      FactoryGirl.create_list :task, count.to_i, project_id: project_id
+    else
+      fail 'No tasks given'
+    end
+  end
+
   def given_project data
-    ActiveCucumber.create_one Project, data
+    options = vertical_table(data)
+    FactoryGirl.create(:project, options)
+  end
+
+  def given_task data
+    options = vertical_table(data)
+    options.merge! project_id: FactoryGirl.create(:project).id if !options.include?(:project_id) 
+    FactoryGirl.create(:task, options)
   end
 
   def check_unexpected_errors
